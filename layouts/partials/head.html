@@ -17,7 +17,8 @@
     {{ end }}
     <link rel="canonical" href="{{ .Permalink }}"/>
     <link rel="icon" href="{{ "favicon.ico" | absURL }}">
-    <link rel="apple-touch-icon" href="{{ "apple-touch-icon.png" | absURL }}"/>
+    <!-- <link rel="apple-touch-icon" href="{{ "apple-touch-icon.png" | absURL }}"/>-->
+	<link rel="manifest"  href="/manifest.json">
     <link rel="stylesheet" href="{{ "css/style.css" | absURL }}">
     <link rel="stylesheet" href="{{ "css/font-awesome.min.css" | absURL }}">
     <link rel="stylesheet" href="{{ "css/monokai.css" | absURL }}">
@@ -43,6 +44,22 @@
 
     <!-- needs to be loaded first for following scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	
+	<script>
+		if('serviceWorker' in navigator) {
+			navigator.serviceWorker
+				.register('/sw.js', { scope: '/' })
+				.then(function(registration) {
+					console.log('Service Worker Registered');
+				});
+
+			navigator.serviceWorker
+				.ready
+				.then(function(registration) {
+					console.log('Service Worker Ready');
+				});
+		}
+	</script>
 </head>
 <body>
 <div class="container">
