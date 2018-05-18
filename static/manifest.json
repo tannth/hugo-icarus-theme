@@ -33,6 +33,10 @@
     "src": "apple-touch-icon-152x152.png",
     "sizes": "152x152",
     "type": "image/png"
+  }, {
+    "src": "apple-touch-icon-256x256.png",
+    "sizes": "256x256",
+    "type": "image/png"
   }],
   "start_url": "/index.html",
   "display": "standalone",
