@@ -5,6 +5,7 @@
     {{ .Hugo.Generator }}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#38b7ea">
     {{ with .Site.Params.author }}<meta name="author" content="{{ . }}">{{ end }}
     {{ with .Description }}
       <meta name="description" content="{{ . }}">
@@ -35,15 +36,39 @@
     {{ partial "head_custom" . }}
 
     {{ if .Params.disable_profile | and .Params.disable_widgets }}
-    <style>
-        .full-width {
-            width: 100% !important;
-        }
-    </style>
+		<style>
+			.full-width {
+				width: 100% !important;
+			}
+			#main {
+				width: 100% !important;
+			}
+		</style>
+	{{ else if not .Params.disable_profile | and .Params.disable_widgets }}
+		<style>
+			.full-width {
+				width: 70% !important;
+			}
+			#main {
+				width: 70% !important;
+			}
+		</style>
+	 {{ else if not .Params.disable_widgets | and .Params.disable_profile }}
+		<style>
+			.full-width {
+				width: 70% !important;
+			}
+			#main {
+				width: 70% !important;
+			}
+		</style>
     {{ end }}
 
     <!-- needs to be loaded first for following scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.plugins.min.js"></script>
+    
 	
 	<script>
 		if('serviceWorker' in navigator) {
@@ -59,6 +84,11 @@
 					console.log('Service Worker Ready');
 				});
 		}
+		
+		 $(function() {
+			$('img').Lazy();
+		});
+			
 	</script>
 </head>
 <body>
