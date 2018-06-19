@@ -67,15 +67,53 @@
     <!-- needs to be loaded first for following scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.plugins.min.js"></script>
-    
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.plugins.min.js"></script>
+	
+	<!-- Firebase App is always required and must be first -->
+	<script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-app.js"></script>
+
+	<!-- Add additional services you want to use -->
+	<script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-messaging.js"></script>    
 	
 	<script>
+
+		var config = {
+			messagingSenderId: "957173336259"
+		};
+		
+		firebase.initializeApp(config);
+
+ 		const messaging = firebase.messaging();
+
+		messaging.onMessage(function(payload) {
+			console.log("Message received. ", payload);
+			console.log("Message received. ", JSON.stringify(payload) );
+            //NotisElem.innerHTML = NotisElem.innerHTML + JSON.stringify(payload) 
+		});	
+        
 		if('serviceWorker' in navigator) {
 			navigator.serviceWorker
 				.register('/sw.js', { scope: '/' })
 				.then(function(registration) {
+
 					console.log('Service Worker Registered');
+					messaging.useServiceWorker(registration);
+
+
+					messaging
+						.requestPermission()
+						.then(function () {
+							console.log("Notification permission granted.");
+
+						// get the token in the form of promise
+						return messaging.getToken();
+					})
+					.then(function(token) {
+						console.log("token is.", token);
+					})
+					.catch(function (err) {
+						console.log("Unable to get permission to notify.", err);
+					});    
 				});
 
 			navigator.serviceWorker
@@ -90,6 +128,8 @@
 		});
 			
 	</script>
+
+	
 </head>
 <body>
 <div class="container">
