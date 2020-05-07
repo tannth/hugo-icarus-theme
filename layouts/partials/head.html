@@ -49,17 +49,24 @@
 			.full-width {
 				width: 70% !important;
 			}
-			#main {
-				width: 70% !important;
+			@media only screen and (max-width: 1024px){
+				#main {
+					width: 100% !important;
+				}
 			}
+		
 		</style>
 	 {{ else if not .Params.disable_widgets | and .Params.disable_profile }}
 		<style>
 			.full-width {
 				width: 70% !important;
 			}
-			#main {
-				width: 70% !important;
+			
+
+			@media only screen and (max-width: 1024px){
+				#main {
+					width: 100% !important;
+				}
 			}
 		</style>
     {{ end }}
